@@ -3,13 +3,10 @@ LIST OF MEMBERS FOR TEAM 128
 Vishnu Prasad
  
 Drew Tozer
-<<<<<<< HEAD
 
 Raymond (Angus) Steele
-=======
- 
+
 XingChen Du(Rick)
->>>>>>> origin/master
  
-Angus Steele
+
 
