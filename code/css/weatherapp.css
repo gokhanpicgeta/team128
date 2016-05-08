@@ -4,3 +4,7 @@ html, body {
     padding: 0; 
 }
 
+#map {
+    height: calc(100vh - 300px); 
+}
+
