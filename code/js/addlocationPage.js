@@ -9,9 +9,13 @@ var map = new google.maps.Map(document.getElementById('map'), {
 });
 var geocoder = new google.maps.Geocoder();
 
-document.getElementById('findLocation').addEventListener('click', function() {
+//document.getElementById('location').addEventListener('input', function() {
+  //geocodeAddress(geocoder, map);
+    //});  
+    
+document.getElementById('location').addEventListener('change', function() {
   geocodeAddress(geocoder, map);
-});
+    }); 
 }
 
 function geocodeAddress(geocoder, resultsMap) 
@@ -27,7 +31,7 @@ function geocodeAddress(geocoder, resultsMap)
     lat = marker.getPosition().lat();
     long  = marker.getPosition().lng();
   } else {
-    alert('Geocode was not successful for the following reason: ' + status);
+    console.log('Geocode was not successful for the following reason: ' + status);
   }
 });
     
