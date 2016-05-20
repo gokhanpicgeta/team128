@@ -1,0 +1,34 @@
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0; 
+}
+
+#map {
+    height: calc(100vh - 300px); 
+}
+
+#map2 {
+    height: calc(100vh - 400px); 
+}
+
+
+#date {
+    font-size: 30px;
+}
+
+#slider{
+    
+width: 300px;
+}
+
+#summary {
+    
+    color: darkgray;
+}
+
+#saveMyLocation {
+    
+    width: calc(50vh -  10px);
+}
+
