@@ -62,32 +62,9 @@ function sliderInput()
     theDate.textContent = "The Date is: " + date.simpleDateString();  
     
 
-    
-    
-            
-        if(localStorage.getItem(APP_PREFIX + locationIndex))
-            {
-                
-                var locate = JSON.parse(localStorage.getItem(APP_PREFIX + locationIndex))
-                
-                
-                for (i=0; i<locate.forecast.length; i++)
-                    {
-                        if (locate.forecast[i].time === msTime)
-                        {
-                            var theForecast = locate.forecast[i]
-                            console.log(theForecast)
-                        }
-                        else
-                        {
-                            var wantedDate = date.forecastDateString();
-                            var getWeather = new LocationWeatherCache;
-                            getWeather.getWeatherAtIndexForDate(wantedDate,latitude,longitude);
-                        }
-                    }
-
-            }
-    
+    var wantedDate = date.forecastDateString();
+    var getWeather = new LocationWeatherCache;
+    getWeather.getWeatherAtIndexForDate(wantedDate,latitude,longitude);
 
     }
     

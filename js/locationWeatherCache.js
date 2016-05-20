@@ -149,7 +149,6 @@ function LocationWeatherCache()
 
 		var day = response.daily.data
 		var obje = day[0];
-        var time = response.currently.time
         
         var weather = {
             sum: obje.summary,
@@ -159,7 +158,6 @@ function LocationWeatherCache()
             temperatureMax: "Max: " + obje.temperatureMax + " oC",
             humidity: obje.humidity,
             windSpeed: "Wind Speed: " + obje.windSpeed + "km/h",
-            time : time
         }
 
         
@@ -176,36 +174,15 @@ function LocationWeatherCache()
         var probOut = "Probability of Precipitation: " + prob + "%";
         var humOut = "Humidity: " + hum + "%"
         
-       
-        
-        var theLat = response.latitude;
-        
-        for (i = 0; i<=30; i++)   
-        {
-        if(localStorage.getItem(APP_PREFIX + i))
-            {
-                
-                var locate = JSON.parse(localStorage.getItem(APP_PREFIX + i))
-                var forecastArray = locate.forecast;
-                var latitudeMe = locate.lat
-                if (latitudeMe === theLat)
-                    {
-                        forecastArray.push(weather)
-                        localStorage.removeItem(APP_PREFIX + i)
-                        localStorage.setItem(APP_PREFIX + i, locate)
-                        
-                        summaryDiv.textContent = weather.sum;
-                        maxDiv.textContent = weather.temperatureMax;
-                        minDiv.textContent = weather.temperatureMin;
-                        humDiv.textContent = humOut;
-                        windDiv.textContent = weather.windSpeed;
-                        precipDiv.textContent = probOut;  
-                    }
-            }
-        }
-        
 
-          
+        
+        summaryDiv.textContent = weather.sum;
+        maxDiv.textContent = weather.temperatureMax;
+        minDiv.textContent = weather.temperatureMin;
+        humDiv.textContent = humOut;
+        windDiv.textContent = weather.windSpeed;
+        precipDiv.textContent = probOut;  
+
 
 
         
