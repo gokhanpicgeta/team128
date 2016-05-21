@@ -1,7 +1,17 @@
+var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation"); 
+var storage = JSON.parse(localStorage.getItem(APP_PREFIX + locationIndex));
+var latitude = storage.lat;
+var longitude = storage.long;
+
 // Code for the View Location page.
 var theDate = document.getElementById("date");
 var initDate = new Date();
 theDate.textContent = "The Date is: " + initDate.simpleDateString();  
+var initWeather = new LocationWeatherCache;
+var wantedInitDate = initDate.forecastDateString();
+initWeather.getWeatherAtIndexForDate(wantedInitDate,latitude,longitude);
+
+
 
 
 
@@ -10,8 +20,7 @@ theDate.textContent = "The Date is: " + initDate.simpleDateString();
 // This is sample code to demonstrate navigation.
 // You need not use it for final app.
 
-var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation"); 
-var storage = JSON.parse(localStorage.getItem(APP_PREFIX + locationIndex));
+
 if (locationIndex !== null)
 {
     if (locationIndex == 300)
@@ -27,8 +36,7 @@ if (locationIndex !== null)
 }
 
 
-var latitude = storage.lat;
-var longitude = storage.long;
+
 
 function initMap() {
   var myLatLng = {lat: latitude, lng: longitude};
@@ -76,7 +84,8 @@ function sliderInput()
 
 function deleteMe()
 {
-    
+    localStorage.removeItem(APP_PREFIX + locationIndex)
+    location.href = 'index.html'
 }
 
 

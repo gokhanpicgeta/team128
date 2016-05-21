@@ -17,7 +17,7 @@ function viewLocation(locationName)
 var listOut = document.getElementById("locationList");
     
     
-for (i = 0; i<=30; i++)   
+for (i = 0; i<=299; i++)   
     {
         if(localStorage.getItem(APP_PREFIX + i))
             {
