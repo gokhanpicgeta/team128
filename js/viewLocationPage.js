@@ -1,7 +1,7 @@
-//This code retrieves the desired location from local storage and saves its coordinates as global variables.
+//Navigation - determines whether on the the viewLocationPage or not
 localStorage.removeItem(APP_PREFIX+"-Home")
 
-
+//This code retrieves the desired location from local storage and saves its coordinates as global variables.
 var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation"); 
 var storage = JSON.parse(localStorage.getItem(APP_PREFIX + locationIndex));
 var latitude = storage.lat;
@@ -19,7 +19,7 @@ initWeather.getWeatherAtIndexForDate(wantedInitDate,latitude,longitude);
 
 
 
-// This code is used to navigate between pages.
+// This code is used to navigate between pages, determining whether the selected page is current location or a saved location.
 if (locationIndex !== null)
 {
     if (locationIndex == 300)

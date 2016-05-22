@@ -55,20 +55,20 @@ function geocodeAddress(geocoder, resultsMap)
 //The add function is run when the "Add Location" button is pressed. It calls methods in locationWeatherCache.js to save it to local storage.
 function add()
 {
-    
+    //Saves the location to local storage
     var newLocation = new LocationWeatherCache();
     var nick = document.getElementById("nickname").value;
     var id = newLocation.addLocation(lat,long,nick)
+    
+    //The location is then saved to local storage using the global variable; "string" 
     newLocation.initialiseFromPDO(string);
     
+    //Calls the weather API to fill the forecast property of the local storage object
     var date = new Date ();
-    var day = date.forecastDateString();
-    console.log(day)
-    newLocation.getWeatherAtIndexForDate(day,lat,long)
+    newLocation.getWeatherAtIndexForDate(date.forecastDateString(),lat,long)
     
     //Redirects the user to the launch page
     window.open('index.html',"_self");
-
 }
 
 

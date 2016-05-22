@@ -49,16 +49,12 @@ function LocationWeatherCache()
     // Returns the number of locations stored in the cache.
     //
     this.length = function() {
-        
-        var num = locations.length;
-        return num;
     };
     
     // Returns the location object for a given index.
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) {
-        return locations[index]; 
     };
 
     // Given a latitude, longitude and nickname, this method saves a 
@@ -68,6 +64,7 @@ function LocationWeatherCache()
     
     this.addLocation = function(latitude, longitude, nickname)
     {
+        //object of each new location is constructed
         var myLocation = {
             lat: latitude,
             long: longitude,
@@ -82,7 +79,6 @@ function LocationWeatherCache()
     // 
     this.removeLocationAtIndex = function(index)
     {
-        locations[index].myLocation.delete()
     }
 
     // This method is used by JSON.stringify() to serialise this class.
@@ -90,8 +86,6 @@ function LocationWeatherCache()
     // are active web service requests and so doesn't need to be saved.
     //
     this.toJSON = function() {
-        //string = JSON.stringify(locations);
-        //console.log(string);
     };
 
     // Given a public-data-only version of the class (such as from
@@ -101,7 +95,8 @@ function LocationWeatherCache()
     this.initialiseFromPDO = function(locationWeatherCachePDO) {
     
     var nextId;    
-       if(localStorage.getItem(APP_PREFIX))
+      //Saves each location to a new local storage object using an id-well
+        if(localStorage.getItem(APP_PREFIX))
             { 
                 var nextLocation = JSON.parse(locationWeatherCachePDO);
                 nextId = Number(localStorage.getItem(APP_PREFIX)) + 1
@@ -132,9 +127,11 @@ function LocationWeatherCache()
     // weather object for that location.
     // 
     this.getWeatherAtIndexForDate = function(date, lat, long) {
+        //URL is constructed for the forecast.io service
         var workingUrl = "https://api.forecast.io/forecast/56d73602d5f12f6ebecd4ee3684c816d/";
         workingUrl += lat + "," + long + "," + date + "/?units=si&exclude=[hourly]&callback=takeWeather()";
     
+        //The URL is then called
         var script = document.createElement('script');
         script.src = workingUrl;
         document.body.appendChild(script);    
@@ -147,7 +144,8 @@ function LocationWeatherCache()
     // weather request.
     //
     this.weatherResponse = function(response) {
-    //Retrieving data from the Jquery repsonse
+    
+        //Retrieving data from the weather API repsonse
 		var day = response.daily.data
 		var obje = day[0];
      
@@ -162,23 +160,30 @@ function LocationWeatherCache()
             windSpeed: "Wind Speed: " + obje.windSpeed + "km/h",
         }
        
-       for (i=1; i<299; i++)
-           {
-               if (localStorage.getItem(APP_PREFIX + i))
-                   {
+       
+        //Checks if on the home page or on the view location page
+        if(localStorage.getItem(APP_PREFIX + "-Home") === "")
+            {
+                //ON the home page
+                //Checks local storage for locations and adds the current days forecast to local storage 
+                for (i=1; i<299; i++)
+                {
+                    if (localStorage.getItem(APP_PREFIX + i))
+                    {
                        var prs = JSON.parse(localStorage.getItem(APP_PREFIX + i))
+                       
+                       //Checks if the coordinates of the weather response equal those saved in local storage
                        if(prs.lat == response.latitude && prs.long == response.longitude)
                            {
                                prs.forecast = weather
                                var str = JSON.stringify(prs)
                                localStorage.setItem(APP_PREFIX + i,str)
                            }
-                   }
-           }
-        
-        if(localStorage.getItem(APP_PREFIX + "-Home") === "")
-            {
+                    }
+                }
             }
+        
+        //NOT on the home page (view location page)
         else
             {
                 //Html of the view location page is updated with the weather

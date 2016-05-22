@@ -1,4 +1,6 @@
 // Code for the main app page (locations list).
+
+//Navigation - determines whether on the the viewLocationPage or not
 if(localStorage.getItem(APP_PREFIX + "-Home"))
     {}
 else
@@ -7,7 +9,7 @@ else
     }
 
 
-
+//Navigating between pages
 function viewLocation(locationName)
 {
     // Save the desired location to local storage
@@ -18,11 +20,13 @@ function viewLocation(locationName)
 
 
  
-var listOut = document.getElementById("locationList");
+
     
-// "For" loop to check local storage for saved locations, and dynamically display them as a list     
+// "For" loop to check local storage for saved locations, and dynamically display them as a list in HTML    
+var listOut = document.getElementById("locationList");
 for (i = 0; i<=299; i++)   
     {
+        //If a location is found in local storage it is displayed
         if(localStorage.getItem(APP_PREFIX + i))
             {
                 var locate = JSON.parse(localStorage.getItem(APP_PREFIX + i))
