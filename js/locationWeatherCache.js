@@ -26,7 +26,7 @@ var string = "";
 var response;
 
 
-
+//Takes the weather information from the weather API and calls the response method
 function takeWeather(input)
 {
     var getWeather = new LocationWeatherCache;
@@ -65,6 +65,7 @@ function LocationWeatherCache()
     // new location into the cache.  It will have an empty 'forecasts'
     // property.  Returns the index of the added location.
     //
+    
     this.addLocation = function(latitude, longitude, nickname)
     {
         var myLocation = {
@@ -146,50 +147,30 @@ function LocationWeatherCache()
     // weather request.
     //
     this.weatherResponse = function(response) {
-
+    //Retrieving data from the Jquery repsonse
 		var day = response.daily.data
 		var obje = day[0];
-        
+     
+        //Weather data is stored in an object
         var weather = {
             sum: obje.summary,
             icon: obje.icon,
-            precipProbability: obje.precipProbability,
-            temperatureMin: "Min: " + obje.temperatureMin + " oC",
-            temperatureMax: "Max: " + obje.temperatureMax + " oC",
-            humidity: obje.humidity,
+            precipProbability: "Probability of Precipitation: " + (Number(obje.precipProbability) * 100) + "%",
+            temperatureMin: "Min: " + obje.temperatureMin + "  \xB0C",
+            temperatureMax: "Max: " + obje.temperatureMax + " \xB0C",
+            humidity: "Humidity: " + (Number(obje.humidity) * 100) + "%",
             windSpeed: "Wind Speed: " + obje.windSpeed + "km/h",
         }
-
         
-        var summaryDiv = document.getElementById("sum");
-        var maxDiv = document.getElementById("max");
-        var minDiv = document.getElementById("min");
-        var humDiv = document.getElementById("hum");
-        var windDiv = document.getElementById("wind");
-        var precipDiv = document.getElementById("precip");
+        //Html of the view location page is updated with the weather
+        document.getElementById("sum").textContent = weather.sum;
+        document.getElementById("max").textContent = weather.temperatureMax;
+        document.getElementById("min").textContent = weather.temperatureMin;;
+        document.getElementById("hum").textContent = weather.humidity;
+        document.getElementById("wind").textContent = weather.windSpeed;
+        document.getElementById("precip").textContent = weather.precipProbability;
         
-        var prob = Number(weather.precipProbability) * 100;
-        var hum = Number(weather.humidity) * 100;
-        
-        var probOut = "Probability of Precipitation: " + prob + "%";
-        var humOut = "Humidity: " + hum + "%"
-        
-
-        
-        summaryDiv.textContent = weather.sum;
-        maxDiv.textContent = weather.temperatureMax;
-        minDiv.textContent = weather.temperatureMin;
-        humDiv.textContent = humOut;
-        windDiv.textContent = weather.windSpeed;
-        precipDiv.textContent = probOut;  
-
-
-
-        
-
-        
-        
-        
+  
     };
 
     // Private methods:
