@@ -1,4 +1,7 @@
 //This code retrieves the desired location from local storage and saves its coordinates as global variables.
+localStorage.removeItem(APP_PREFIX+"-Home")
+
+
 var locationIndex = localStorage.getItem(APP_PREFIX + "-selectedLocation"); 
 var storage = JSON.parse(localStorage.getItem(APP_PREFIX + locationIndex));
 var latitude = storage.lat;

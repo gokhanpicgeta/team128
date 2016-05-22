@@ -1,7 +1,4 @@
 // Code for the Add Location page.
-
-
-
 var lat;
 var long;
 
@@ -63,6 +60,11 @@ function add()
     var nick = document.getElementById("nickname").value;
     var id = newLocation.addLocation(lat,long,nick)
     newLocation.initialiseFromPDO(string);
+    
+    var date = new Date ();
+    var day = date.forecastDateString();
+    console.log(day)
+    newLocation.getWeatherAtIndexForDate(day,lat,long)
     
     //Redirects the user to the launch page
     window.open('index.html',"_self");

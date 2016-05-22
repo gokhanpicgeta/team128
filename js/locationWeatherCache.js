@@ -72,7 +72,7 @@ function LocationWeatherCache()
             lat: latitude,
             long: longitude,
             nick: nickname,
-            forecast: []
+            forecast: ""
         }
         string = JSON.stringify(myLocation);
         
@@ -161,15 +161,34 @@ function LocationWeatherCache()
             humidity: "Humidity: " + (Number(obje.humidity) * 100) + "%",
             windSpeed: "Wind Speed: " + obje.windSpeed + "km/h",
         }
+       
+       for (i=1; i<299; i++)
+           {
+               if (localStorage.getItem(APP_PREFIX + i))
+                   {
+                       var prs = JSON.parse(localStorage.getItem(APP_PREFIX + i))
+                       if(prs.lat == response.latitude && prs.long == response.longitude)
+                           {
+                               prs.forecast = weather
+                               var str = JSON.stringify(prs)
+                               localStorage.setItem(APP_PREFIX + i,str)
+                           }
+                   }
+           }
         
-        //Html of the view location page is updated with the weather
-        document.getElementById("sum").textContent = weather.sum;
-        document.getElementById("max").textContent = weather.temperatureMax;
-        document.getElementById("min").textContent = weather.temperatureMin;;
-        document.getElementById("hum").textContent = weather.humidity;
-        document.getElementById("wind").textContent = weather.windSpeed;
-        document.getElementById("precip").textContent = weather.precipProbability;
-        
+        if(localStorage.getItem(APP_PREFIX + "-Home") === "")
+            {
+            }
+        else
+            {
+                //Html of the view location page is updated with the weather
+                document.getElementById("sum").textContent = weather.sum;
+                document.getElementById("max").textContent = weather.temperatureMax;
+                document.getElementById("min").textContent = weather.temperatureMin;;
+                document.getElementById("hum").textContent = weather.humidity;
+                document.getElementById("wind").textContent = weather.windSpeed;
+                document.getElementById("precip").textContent = weather.precipProbability;
+            }
   
     };
 

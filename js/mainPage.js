@@ -1,4 +1,13 @@
 // Code for the main app page (locations list).
+if(localStorage.getItem(APP_PREFIX + "-Home"))
+    {}
+else
+    {
+        localStorage.setItem(APP_PREFIX + "-Home","")   
+    }
+
+
+
 function viewLocation(locationName)
 {
     // Save the desired location to local storage
@@ -18,8 +27,10 @@ for (i = 0; i<=299; i++)
             {
                 var locate = JSON.parse(localStorage.getItem(APP_PREFIX + i))
                 var nick = locate.nick;
-                fore = "Weather Summary"
-                var icon = "clear-day";
+                
+                var weather = locate.forecast
+                var fore = weather.temperatureMax + " " + weather.temperatureMin
+                var icon = weather.icon;
 
                 //Code to add each individual list element to the launch screen
                 var html = '<li onclick="viewLocation(' + i + ');" class="mdl-list__item mdl-list__item--two-line"><span class="mdl-list__item-primary-content"><img class="mdl-list__item-icon" src="images/'+ icon +'.png" class="list-avatar" /><span>' + nick + '</span><span id="fore" class="mdl-list__item-sub-title"> '+ fore+'</span></span></li>'
