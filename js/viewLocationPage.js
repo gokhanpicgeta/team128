@@ -26,10 +26,13 @@ if (locationIndex !== null)
         {
             document.getElementById("headerBarTitle").textContent = "Current Location";
         }
+    else if(storage.nick !== "")
+        {
+           document.getElementById("headerBarTitle").textContent = storage.nick; 
+        }
     else
         {
-            var nickname = storage.nick;
-            document.getElementById("headerBarTitle").textContent = nickname;
+           document.getElementById("headerBarTitle").textContent = "Location: " + locationIndex;
         }
 
 }
@@ -90,8 +93,8 @@ function sliderInput()
 //This function is used to delete a location from local storage and the app itself.
 function deleteMe()
 {
-    localStorage.removeItem(APP_PREFIX + locationIndex)
-    location.href = 'index.html'
+    var del = new LocationWeatherCache
+    del.removeLocationAtIndex(locationIndex)
 }
 
 

@@ -25,7 +25,6 @@ Date.prototype.forecastDateString = function() {
 var string = "";
 var response;
 
-
 //Takes the weather information from the weather API and calls the response method
 function takeWeather(input)
 {
@@ -49,12 +48,14 @@ function LocationWeatherCache()
     // Returns the number of locations stored in the cache.
     //
     this.length = function() {
+        return locations.length;
     };
     
     // Returns the location object for a given index.
     // Indexes begin at zero.
     //
     this.locationAtIndex = function(index) {
+       return locations[index];
     };
 
     // Given a latitude, longitude and nickname, this method saves a 
@@ -79,13 +80,16 @@ function LocationWeatherCache()
     // 
     this.removeLocationAtIndex = function(index)
     {
+        localStorage.removeItem(APP_PREFIX + index)
+        location.href = 'index.html'
     }
 
     // This method is used by JSON.stringify() to serialise this class.
     // Note that the callbacks attribute is only meaningful while there 
     // are active web service requests and so doesn't need to be saved.
     //
-    this.toJSON = function() {
+    this.toJSON = function(input) {
+        return JSON.stringify(input);
     };
 
     // Given a public-data-only version of the class (such as from
@@ -110,10 +114,7 @@ function LocationWeatherCache()
                 localStorage.setItem(APP_PREFIX,"1");
                 localStorage.setItem(APP_PREFIX + "1",locationWeatherCachePDO);
                 nextId = 1
-            }
-        
-        
-        
+            }  
     };
 
     // Request weather for the location at the given index for the
@@ -153,10 +154,10 @@ function LocationWeatherCache()
         var weather = {
             sum: obje.summary,
             icon: obje.icon,
-            precipProbability: "Probability of Precipitation: " + (Number(obje.precipProbability) * 100) + "%",
+            precipProbability: "Probability of Precipitation: " + (Number(obje.precipProbability) * 100).toFixed(2) + "%",
             temperatureMin: "Min: " + obje.temperatureMin + "  \xB0C",
             temperatureMax: "Max: " + obje.temperatureMax + " \xB0C",
-            humidity: "Humidity: " + (Number(obje.humidity) * 100) + "%",
+            humidity: "Humidity: " + (Number(obje.humidity) * 100).toFixed(2) + "%",
             windSpeed: "Wind Speed: " + obje.windSpeed + "km/h",
         }
        
@@ -209,6 +210,17 @@ function LocationWeatherCache()
     //
     function indexForLocation(latitude, longitude)
     {
+        for (i = 0; i<locations.length; i++)
+            {
+                if (locations[i].lat === latitude && locations[i].long === longitude)
+                    {
+                        return i;
+                    }
+                else
+                    {
+                        return -1;
+                    }
+            }
     }
 }
 
@@ -216,14 +228,27 @@ function LocationWeatherCache()
 //
 function loadLocations()
 {
+    var load = localStorage.getItem(APP_PREFIX);
+    if(load.forcast !== "")
+        {
+            
+        }
+    else
+        {
+            var initialise = new LocationWeatherCache;
+            initialise.initialiseFromPDO();
+        }
 }
 
 // Save the singleton locationWeatherCache to Local Storage.
 //
 function saveLocations()
 {
+    var cache = new LocationWeatherCache
+    var out = cache.toJSON(cache);
+    localStorage.setItem(APP_PREFIX, out);
 }
 
 
-
+loadLocations();
 
