@@ -67,8 +67,6 @@ function add()
     var date = new Date ();
     newLocation.getWeatherAtIndexForDate(date.forecastDateString(),lat,long)
     
-    //Redirects the user to the launch page
-    window.open('index.html',"_self");
 }
 
 

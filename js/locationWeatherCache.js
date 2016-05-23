@@ -176,8 +176,11 @@ function LocationWeatherCache()
                        if(prs.lat == response.latitude && prs.long == response.longitude)
                            {
                                prs.forecast = weather
+                               console.log(prs)
                                var str = JSON.stringify(prs)
                                localStorage.setItem(APP_PREFIX + i,str)
+                                //Redirects the user to the launch page
+                                location.href = 'index.html'
                            }
                     }
                 }
