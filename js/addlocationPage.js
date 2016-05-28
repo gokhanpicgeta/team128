@@ -14,14 +14,12 @@ function initMap() {
     var geocoder = new google.maps.Geocoder();
 
     //When the enter button is pressed, it calls geocodeAddress()    
-    document.getElementById('location').addEventListener('keypress', function(enterMe) {var key = enterMe.which || enterMe.keyCode;
-        //The enter button number is 13
-        if (key === 13) 
-        {
-            geocodeAddress(geocoder, map)
+      document.getElementById('location').addEventListener('keypress', function() {
+    geocodeAddress(geocoder, map);
+  });
         }
-    });      
-}
+   
+
 
 
 //This function takes the address typed within the text field and locates it on the map
@@ -72,7 +70,9 @@ function add()
     newLocation.addLocation(lat,long,nick)
     
     //The location is then saved to local storage using the global variable; "string" 
-    newLocation.initialiseFromPDO(string);
+    var temp = localStorage.getItem(APP_PREFIX +"-temp")
+    localStorage.removeItem(APP_PREFIX + "-temp")
+    newLocation.initialiseFromPDO(temp);
     
     //Calls the weather API to fill the forecast property of the local storage object
     var date = new Date ();

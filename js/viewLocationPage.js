@@ -58,20 +58,19 @@ if (locationIndex !== null)
                       
                     latitude = pos.lat;
                     longitude = pos.lng;
-                      initWeather.getWeatherAtIndexForDate(wantedInitDate,latitude,longitude);
-
+                    initWeather.getWeatherAtIndexForDate(wantedInitDate,latitude,longitude);
                 var marker = new google.maps.Marker({
                     position: pos,
                     map: map,
                   }); 
                     map.setCenter(pos);
 
-                      var cityCircle = new google.maps.Circle({
-                          strokeColor: '#FF0000',
-                          strokeOpacity: 0.8,
+                      var inaccuracyCircle = new google.maps.Circle({
+                          strokeColor: '#67E6EC',
+                          strokeOpacity: 1,
                           strokeWeight: 2,
-                          fillColor: '#FF0000',
-                          fillOpacity: 0.35,
+                          fillColor: '#67E6EC',
+                          fillOpacity: 0.4,
                           map: map,
                           center: pos,
                           radius: 200

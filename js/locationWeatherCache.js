@@ -19,19 +19,7 @@ Date.prototype.forecastDateString = function() {
     return this.simpleDateString() + "T12:00:00";
 }
 
-
-
 // Code for LocationWeatherCache class and other shared code.
-var string = "";
-var response;
-
-//Takes the weather information from the weather API and calls the response method
-function takeWeather(input)
-{
-    var getWeather = new LocationWeatherCache;
-    getWeather.weatherResponse(input);
-}
-
 
 // Prefix to use for Local Storage.  You may change this.
 var APP_PREFIX = "weatherApp";
@@ -72,8 +60,11 @@ function LocationWeatherCache()
             nick: nickname,
             forecast: ""
         }
-        string = JSON.stringify(myLocation);
+        locations.push(myLocation)
+        var string = JSON.stringify(myLocation);
+        localStorage.setItem(APP_PREFIX+"-temp",string)
         
+        return (-1 + locations.length);
     }
 
     // Removes the saved location at the given index.
@@ -115,6 +106,7 @@ function LocationWeatherCache()
                 localStorage.setItem(APP_PREFIX + "1",locationWeatherCachePDO);
                 nextId = 1
             }  
+    
     };
 
     // Request weather for the location at the given index for the
@@ -128,9 +120,10 @@ function LocationWeatherCache()
     // weather object for that location.
     // 
     this.getWeatherAtIndexForDate = function(date, lat, long) {
+        
         //URL is constructed for the forecast.io service
         var workingUrl = "https://api.forecast.io/forecast/56d73602d5f12f6ebecd4ee3684c816d/";
-        workingUrl += lat + "," + long + "," + date + "/?units=si&exclude=[hourly]&callback=takeWeather()";
+        workingUrl += lat + "," + long + "," + date + "/?units=si&exclude=[hourly]&callback=saveLocations()";
     
         //The URL is then called
         var script = document.createElement('script');
@@ -158,7 +151,7 @@ function LocationWeatherCache()
             temperatureMin: "Min: " + obje.temperatureMin + "  \xB0C",
             temperatureMax: "Max: " + obje.temperatureMax + " \xB0C",
             humidity: "Humidity: " + (Number(obje.humidity) * 100).toFixed(2) + "%",
-            windSpeed: "Wind Speed: " + obje.windSpeed + "km/h",
+            windSpeed: "Wind Speed: " + obje.windSpeed + "km/h"
         }
        
        
@@ -167,6 +160,8 @@ function LocationWeatherCache()
             {
                 //ON the home page
                 //Checks local storage for locations and adds the current days forecast to local storage 
+                
+                
                 for (i=1; i<299; i++)
                 {
                     if (localStorage.getItem(APP_PREFIX + i))
@@ -188,8 +183,14 @@ function LocationWeatherCache()
             }
         
         //NOT on the home page (view location page)
+
         else
             {
+                if (localStorage.getItem(APP_PREFIX + "-selectedLocation") == 300)
+                    {
+                        var currentString = JSON.stringify(weather)
+                        localStorage.setItem(APP_PREFIX + "-currentLoc", currentString)    
+                    }
                 //Html of the view location page is updated with the weather
                 document.getElementById("sum").textContent = weather.sum;
                 document.getElementById("max").textContent = weather.temperatureMax;
@@ -241,14 +242,13 @@ function loadLocations()
 }
 
 // Save the singleton locationWeatherCache to Local Storage.
-//
-function saveLocations()
+//Takes the weather information from the weather API and calls the response method
+function saveLocations(input)
 {
     var cache = new LocationWeatherCache
     var out = cache.toJSON(cache);
-    localStorage.setItem(APP_PREFIX, out);
+    cache.weatherResponse(input);
+    //localStorage.setItem(APP_PREFIX, out);
 }
 
-
-//loadLocations();
 

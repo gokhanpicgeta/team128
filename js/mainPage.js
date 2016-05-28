@@ -21,7 +21,15 @@ function viewLocation(locationName)
 }
 
 
- 
+if(localStorage.getItem(APP_PREFIX + "-currentLoc"))
+    {
+        //Update Weather on Launchp page for current location
+        var current = document.getElementById("weather0");
+        var currWeather = JSON.parse(localStorage.getItem(APP_PREFIX + "-currentLoc"))
+        current.textContent = currWeather.temperatureMax + " " + currWeather.temperatureMin;
+        document.getElementById("icon0").src = "images/" + currWeather.icon + ".png";
+    }
+
 
     
 // "For" loop to check local storage for saved locations, and dynamically display them as a list in HTML    
