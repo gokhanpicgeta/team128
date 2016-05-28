@@ -13,10 +13,14 @@ function initMap() {
     
     var geocoder = new google.maps.Geocoder();
 
-    //When the address text box changes, it calls geocodeAddress()    
-    document.getElementById('location').addEventListener('change', function() {
-        geocodeAddress(geocoder, map);
-        });      
+    //When the enter button is pressed, it calls geocodeAddress()    
+    document.getElementById('location').addEventListener('keypress', function(enterMe) {var key = enterMe.which || enterMe.keyCode;
+        //The enter button number is 13
+        if (key === 13) 
+        {
+            geocodeAddress(geocoder, map)
+        }
+    });      
 }
 
 
@@ -58,7 +62,14 @@ function add()
     //Saves the location to local storage
     var newLocation = new LocationWeatherCache();
     var nick = document.getElementById("nickname").value;
-    var id = newLocation.addLocation(lat,long,nick)
+    
+    //Determines whether the location has a nickname entered. If not the location text field entry is used
+    if (document.getElementById("nickname").value === "")
+        {
+            nick = document.getElementById("location").value;
+        }
+
+    newLocation.addLocation(lat,long,nick)
     
     //The location is then saved to local storage using the global variable; "string" 
     newLocation.initialiseFromPDO(string);

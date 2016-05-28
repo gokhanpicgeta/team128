@@ -250,5 +250,5 @@ function saveLocations()
 }
 
 
-loadLocations();
+//loadLocations();
 
